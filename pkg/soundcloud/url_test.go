@@ -3,7 +3,7 @@ package soundcloud_test
 import (
 	"testing"
 
-	"github.com/AYehia0/soundcloud-dl/pkg/soundcloud"
+	"github.com/kai-thompson/soundcloud-dl/pkg/soundcloud"
 )
 
 func TestIsValidUrl(t *testing.T) {

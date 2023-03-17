@@ -1,4 +1,4 @@
-module github.com/AYehia0/soundcloud-dl
+module github.com/kai-thompson/soundcloud-dl
 
 go 1.19
 

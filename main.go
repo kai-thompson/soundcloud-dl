@@ -1,6 +1,6 @@
 package main
 
-import soundclouddl "github.com/AYehia0/soundcloud-dl/cmd/soundcloud-dl"
+import soundclouddl "github.com/kai-thompson/soundcloud-dl/cmd/soundcloud-dl"
 
 func main() {
 	// call the cmd Run command to execute the whole program

@@ -5,8 +5,8 @@ import (
 	"os"
 	"sync"
 
-	"github.com/AYehia0/soundcloud-dl/pkg/soundcloud"
-	"github.com/AYehia0/soundcloud-dl/pkg/theme"
+	"github.com/kai-thompson/soundcloud-dl/pkg/soundcloud"
+	"github.com/kai-thompson/soundcloud-dl/pkg/theme"
 	"github.com/manifoldco/promptui"
 )
 

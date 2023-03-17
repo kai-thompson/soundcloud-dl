@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/AYehia0/soundcloud-dl/pkg/client"
+	"github.com/kai-thompson/soundcloud-dl/pkg/client"
 	"github.com/bogem/id3v2"
 )
 

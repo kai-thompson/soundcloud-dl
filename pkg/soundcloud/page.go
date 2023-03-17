@@ -11,7 +11,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/AYehia0/soundcloud-dl/pkg/client"
+	"github.com/kai-thompson/soundcloud-dl/pkg/client"
 	"github.com/PuerkitoBio/goquery"
 )
 
