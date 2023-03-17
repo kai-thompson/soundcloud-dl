@@ -2,6 +2,7 @@
 package soundcloud
 
 import (
+	"bytes"
 	"errors"
 	"io"
 	"net/http"
@@ -62,6 +63,24 @@ func downloadSeg(wg *sync.WaitGroup, segmentURI string, file *os.File, dlbar *ba
 
 }
 
+// extract the urls of the individual segment and then steam/download.
+func downloadSegBuffer(wg *sync.WaitGroup, segmentURI string, buf *bytes.Buffer) {
+	defer wg.Done()
+	resp, err := http.Get(segmentURI)
+
+	if err != nil {
+		return
+	}
+
+	defer resp.Body.Close()
+
+	_, err = io.Copy(buf, resp.Body)
+
+	if err != nil {
+		return
+	}
+}
+
 func getSegments(body io.Reader) []string {
 	segments := make([]string, 0)
 	pl, listType, err := m.DecodeFrom(body, true)
@@ -94,6 +113,17 @@ func DownloadM3u8(filepath string, dlbar *bar.ProgressBar, segments []string) er
 	for _, segment := range segments {
 		wg.Add(1)
 		downloadSeg(&wg, segment, file, dlbar)
+	}
+
+	return nil
+}
+
+func DownloadM3u8ToBuffer(buf *bytes.Buffer, segments []string) error {
+	var wg sync.WaitGroup
+
+	for _, segment := range segments {
+		wg.Add(1)
+		downloadSegBuffer(&wg, segment, buf)
 	}
 
 	return nil
@@ -156,4 +186,19 @@ func Download(track DownloadTrack, dlpath string) string {
 	io.Copy(io.MultiWriter(f, bar), resp.Body)
 
 	return path
+}
+
+func DownloadToBuffer(track DownloadTrack, buf *bytes.Buffer) error {
+	resp, err := http.Get(track.Url)
+
+	if err != nil {
+		return err
+	}
+
+	defer resp.Body.Close()
+
+	segments := getSegments(resp.Body)
+	DownloadM3u8ToBuffer(buf, segments)
+
+	return nil
 }
